@@ -389,7 +389,7 @@
         <div class="flex items-center gap-3">
           <div class="rounded-xl bg-indigo-600 p-2"><Music class="h-6 w-6" /></div>
           <div>
-            <h1 class="text-xl font-bold">PianoChord <span class="text-xs text-indigo-300">MODULE</span></h1>
+            <h1 class="text-xl font-bold">SongGroup <span class="text-xs text-indigo-300">CHORDS</span></h1>
             <p class="text-xs text-slate-400">Interactive theory workbench</p>
           </div>
         </div>
