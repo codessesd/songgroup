@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import { Form, Head } from '@inertiajs/vue3';
 import SecurityController from '@/actions/App/Http/Controllers/Settings/SecurityController';
-import Heading from '@/components/Heading.vue';
-import InputError from '@/components/InputError.vue';
-import PasswordInput from '@/components/PasswordInput.vue';
-import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
+import Heading from '@/components/stock/Heading.vue';
+import InputError from '@/components/stock/InputError.vue';
+import PasswordInput from '@/components/stock/PasswordInput.vue';
+import { Button } from '@/components/stock/ui/button';
+import { Label } from '@/components/stock/ui/label';
 import { edit } from '@/routes/security';
-import type { Props as ManagePasskeysProps } from '@/components/ManagePasskeys.vue';
-import ManagePasskeys from '@/components/ManagePasskeys.vue';
-import type { Props as ManageTwoFactorProps } from '@/components/ManageTwoFactor.vue';
-import ManageTwoFactor from '@/components/ManageTwoFactor.vue';
+import type { Props as ManagePasskeysProps } from '@/components/stock/ManagePasskeys.vue';
+import ManagePasskeys from '@/components/stock/ManagePasskeys.vue';
+import type { Props as ManageTwoFactorProps } from '@/components/stock/ManageTwoFactor.vue';
+import ManageTwoFactor from '@/components/stock/ManageTwoFactor.vue';
 
 // oxfmt-ignore
 type Props = {

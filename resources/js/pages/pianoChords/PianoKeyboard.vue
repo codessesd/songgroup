@@ -43,16 +43,16 @@
           :class="
             activeNotes.includes(midi)
               ? isRoot(midi)
-                ? 'fill-indigo-500 stroke-indigo-300'
-                : 'fill-fuchsia-500 stroke-fuchsia-300'
-              : 'fill-slate-100 stroke-slate-300'
+                ? 'fill-[#39766b] stroke-[#a9c2ba]'
+                : 'fill-[#b56e4b] stroke-[#f1c09f]'
+                : 'fill-[#fffdf8] stroke-[#dcd8ce]'
           "
         />
         <text
           :x="whiteIndex(midi) * 36 + 18"
           y="168"
           text-anchor="middle"
-          :class="activeNotes.includes(midi) ? 'fill-white font-bold' : 'fill-slate-700 text-xs'"
+          :class="activeNotes.includes(midi) ? 'fill-white font-bold' : 'fill-[#53645f] text-xs'"
         >
           {{ noteName(midi) }}
         </text>
@@ -61,7 +61,7 @@
           :x="whiteIndex(midi) * 36 + 18"
           y="148"
           text-anchor="middle"
-          class="fill-amber-300 text-xs font-bold"
+          class="fill-white text-xs font-bold"
         >
           {{ intervalTag(midi) }}
         </text>
@@ -81,14 +81,14 @@
           :class="
             activeNotes.includes(midi)
               ? isRoot(midi)
-                ? 'fill-indigo-600 stroke-indigo-300'
-                : 'fill-fuchsia-600 stroke-fuchsia-300'
+                ? 'fill-[#b56e4b] stroke-[#f1c09f]'
+                : 'fill-[#b56e4b] stroke-[#f1c09f]'
               : canSetAccidental
-                ? 'fill-slate-900 stroke-amber-500'
-                : 'fill-slate-900 stroke-slate-700'
+                ? 'fill-[#173d3a] stroke-[#e7b08c]'
+                : 'fill-[#173d3a] stroke-[#47736b]'
           "
         />
-        <text :x="(blackLeft(midi) + 1) * 36" y="102" text-anchor="middle" class="fill-slate-300 text-[9px] font-bold">
+        <text :x="(blackLeft(midi) + 1) * 36" y="102" text-anchor="middle" class="fill-[#c6d5ce] text-[9px] font-bold">
           {{ noteName(midi) }}
         </text>
       </g>

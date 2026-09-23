@@ -1,25 +1,14 @@
 <script setup lang="ts">
   import { computed, onBeforeUnmount, ref, watch } from "vue";
   import { Head } from "@inertiajs/vue3";
+  import PianoChordsHeader from "../../components/PianoChordsHeader.vue";
   import ChordExplorer from "./ChordExplorer.vue";
   import EarTrainingQuiz from "./EarTrainingQuiz.vue";
   import PianoKeyboard from "./PianoKeyboard.vue";
   import ProgressionBuilder from "./ProgressionBuilder.vue";
   import ScaleExplorer from "./ScaleExplorer.vue";
   import type { ChordDefinition } from "./types";
-  import {
-    BookOpen,
-    GraduationCap,
-    Layers,
-    ListMusic,
-    Music,
-    Music2,
-    Play,
-    RotateCcw,
-    Search,
-    Volume2,
-    VolumeX,
-  } from "@lucide/vue";
+  import { Music2, Play, RotateCcw, Search } from "@lucide/vue";
 
   type Tab = "explorer" | "identifier" | "scales" | "progressions" | "quiz";
   type SoundPreset = "piano" | "epiano" | "synth";
@@ -383,53 +372,20 @@
 
 <template>
   <Head title="PianoChord Studio" />
-  <div class="min-h-screen bg-slate-950 text-slate-100 antialiased">
-    <header class="sticky top-0 z-20 border-b border-slate-800 bg-slate-900/95 backdrop-blur">
-      <div class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-4 py-3">
-        <div class="flex items-center gap-3">
-          <div class="rounded-xl bg-indigo-600 p-2"><Music class="h-6 w-6" /></div>
-          <div>
-            <h1 class="text-xl font-bold">SongGroup <span class="text-xs text-indigo-300">CHORDS</span></h1>
-            <p class="text-xs text-slate-400">Interactive theory workbench</p>
-          </div>
-        </div>
-        <nav class="flex gap-1 overflow-x-auto rounded-xl border border-slate-800 bg-slate-950 p-1">
-          <button
-            v-for="item in [
-              { id: 'explorer', label: 'Explorer', icon: BookOpen },
-              { id: 'identifier', label: 'Finder', icon: Search },
-              { id: 'scales', label: 'Scales', icon: Layers },
-              { id: 'progressions', label: 'Progressions', icon: ListMusic },
-              { id: 'quiz', label: 'Quiz', icon: GraduationCap },
-            ]"
-            :key="item.id"
-            class="flex items-center gap-2 whitespace-nowrap rounded-lg px-3 py-2 text-sm"
-            :class="activeTab === item.id ? 'bg-indigo-600 text-white' : 'text-slate-400 hover:bg-slate-800'"
-            @click="selectTab(item.id as Tab)"
-          >
-            <component :is="item.icon" class="h-4 w-4" />{{ item.label }}
-          </button>
-        </nav>
-        <div class="flex items-center gap-2">
-          <select v-model="soundPreset" class="rounded-lg border border-slate-800 bg-slate-900 px-2 py-2 text-xs">
-            <option value="piano">Grand Piano</option>
-            <option value="epiano">Electric Piano</option>
-            <option value="synth">Warm Synth</option></select
-          ><button
-            class="rounded-lg border border-slate-800 bg-slate-900 p-2"
-            :aria-label="muted ? 'Unmute audio' : 'Mute audio'"
-            @click="muted = !muted"
-          >
-            <VolumeX v-if="muted" class="h-4 w-4 text-rose-400" /><Volume2 v-else class="h-4 w-4" />
-          </button>
-        </div>
-      </div>
-    </header>
+  <div class="min-h-screen bg-[#f6f4ef] text-[#17211f] antialiased">
+    <PianoChordsHeader
+      :active-tab="activeTab"
+      :sound-preset="soundPreset"
+      :muted="muted"
+      @select-tab="selectTab"
+      @update:sound-preset="soundPreset = $event"
+      @update:muted="muted = $event"
+    />
     <main class="mx-auto flex w-full max-w-7xl flex-col gap-6 p-4 md:p-6">
-      <section class="rounded-2xl border border-slate-800 bg-slate-900 p-4 shadow-xl md:p-6">
+      <section class="rounded-2xl border border-[#dcd8ce] bg-[#fffdf8] p-4 shadow-xl shadow-[#173d3a]/10 md:p-6">
         <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
           <h2 class="text-lg font-semibold">
-            <span class="mr-2 inline-block h-3 w-3 rounded-full bg-emerald-500" />{{
+            <span class="mr-2 inline-block h-3 w-3 rounded-full bg-[#39766b]" />{{
               activeTab === "explorer"
                 ? `${noteName(rootNote)}${currentChord.abbr} keyboard`
                 : activeTab === "identifier"
@@ -442,22 +398,22 @@
             }}
           </h2>
           <div class="flex flex-wrap gap-2">
-            <select v-model="accidentalMode" class="rounded-lg border border-slate-700 bg-slate-800 px-2 py-2 text-xs">
+            <select v-model="accidentalMode" class="rounded-lg border border-[#47736b] bg-[#24504a] px-2 py-2 text-xs text-[#f7f3e9]">
               <option value="sharps">♯ Sharps</option>
               <option value="flats">♭ Flats</option>
               <option value="custom">Custom</option></select
             ><button
               v-if="accidentalMode === 'custom'"
-              class="rounded-lg bg-slate-800 px-2 py-2 text-xs"
+              class="rounded-lg bg-[#e7ded2] px-2 py-2 text-xs text-[#173d3a]"
               @click="setMode = !setMode"
             >
               Set: {{ setMode ? "ON" : "OFF" }}</button
             ><button
-              class="flex items-center gap-2 rounded-xl bg-indigo-600 px-4 py-2 text-sm font-medium hover:bg-indigo-500"
+              class="flex items-center gap-2 rounded-xl bg-[#e7b08c] px-4 py-2 text-sm font-medium text-[#173d3a] hover:bg-[#f1c09f]"
               @click="playChord()"
             >
               <Play class="h-4 w-4 fill-current" />Play</button
-            ><select v-model="playStyle" class="rounded-xl border border-slate-700 bg-slate-800 px-3 py-2 text-xs">
+            ><select v-model="playStyle" class="rounded-xl border border-[#47736b] bg-[#24504a] px-3 py-2 text-xs text-[#f7f3e9]">
               <option value="chord">Block Chord</option>
               <option value="strum">Strum</option>
               <option value="arpeggio">Arpeggio</option>
@@ -497,27 +453,27 @@
         @play="playChord()"
       />
       <section v-else-if="activeTab === 'identifier'" class="grid gap-6 lg:grid-cols-3">
-        <div class="rounded-2xl border border-slate-800 bg-slate-900 p-6 lg:col-span-2">
+        <div class="rounded-2xl border border-[#dcd8ce] bg-[#fffdf8] p-6 lg:col-span-2">
           <div class="mb-4 flex items-center justify-between">
-            <h3 class="flex items-center gap-2 text-lg font-bold"><Search class="h-5 w-5 text-indigo-400" />Chord matches</h3>
-            <button class="flex items-center gap-2 rounded-lg bg-slate-800 px-3 py-2 text-xs" @click="manualNotes = []">
+            <h3 class="flex items-center gap-2 text-lg font-bold"><Search class="h-5 w-5 text-[#b56e4b]" />Chord matches</h3>
+            <button class="flex items-center gap-2 rounded-lg bg-[#e7ded2] px-3 py-2 text-xs text-[#173d3a]" @click="manualNotes = []">
               <RotateCcw class="h-4 w-4" />Clear
             </button>
           </div>
-          <div class="mb-6 rounded-xl border border-slate-800 bg-slate-950 p-4 text-sm">
-            <span class="text-slate-400">Selected: </span
-            ><span v-if="!manualNotes.length" class="text-slate-500">click keys above</span
+          <div class="mb-6 rounded-xl border border-[#dcd8ce] bg-[#f3f1eb] p-4 text-sm">
+            <span class="text-[#78817c]">Selected: </span
+            ><span v-if="!manualNotes.length" class="text-[#a5aaa4]">click keys above</span
             ><span
               v-for="note in manualNotes"
               v-else
               :key="note"
-              class="mr-2 rounded bg-indigo-600 px-2 py-1 text-xs font-bold"
+              class="mr-2 rounded bg-[#39766b] px-2 py-1 text-xs font-bold text-white"
               >{{ noteName(note) }}</span
             >
           </div>
           <div
             v-if="!identifiedChords.length"
-            class="rounded-xl border border-dashed border-slate-800 py-12 text-center text-sm text-slate-500"
+            class="rounded-xl border border-dashed border-[#c9c4b8] py-12 text-center text-sm text-[#78817c]"
           >
             <Music2 class="mx-auto mb-2 h-10 w-10 opacity-40" />Select notes to identify a chord.
           </div>
@@ -525,14 +481,14 @@
             v-for="match in identifiedChords"
             v-else
             :key="match.shortName"
-            class="mb-3 flex items-center justify-between rounded-xl border border-slate-800 bg-slate-950 p-4"
+            class="mb-3 flex items-center justify-between rounded-xl border border-[#dcd8ce] bg-[#f3f1eb] p-4"
           >
             <div>
-              <strong class="text-lg text-indigo-300">{{ match.shortName }}</strong>
-              <p class="text-xs text-slate-400">{{ match.fullName }} · {{ match.def.intervals.join(" - ") }}</p>
+              <strong class="text-lg text-[#b56e4b]">{{ match.shortName }}</strong>
+              <p class="text-xs text-[#78817c]">{{ match.fullName }} · {{ match.def.intervals.join(" - ") }}</p>
             </div>
             <button
-              class="rounded-lg border border-indigo-500/30 px-3 py-2 text-xs text-indigo-300"
+              class="rounded-lg border border-[#b56e4b]/30 px-3 py-2 text-xs text-[#b56e4b]"
               @click="
                 rootNote = match.root;
                 chordType = match.def.id;
@@ -543,8 +499,8 @@
             </button>
           </div>
         </div>
-        <div class="rounded-2xl border border-slate-800 bg-slate-900 p-6 text-sm text-slate-400">
-          <h4 class="mb-3 font-semibold text-slate-200">Reverse finder</h4>
+        <div class="rounded-2xl border border-[#dcd8ce] bg-[#fffdf8] p-6 text-sm text-[#78817c]">
+          <h4 class="mb-3 font-semibold text-[#17211f]">Reverse finder</h4>
           <p>Build a chord on the keyboard and PianoChord will compare its pitch classes against the library.</p>
         </div>
       </section>
@@ -597,7 +553,7 @@
         @next="startQuiz"
       />
     </main>
-    <footer class="border-t border-slate-800 py-6 text-center text-xs text-slate-500">
+    <footer class="border-t border-[#dcd8ce] py-6 text-center text-xs text-[#78817c]">
       PianoChord Module · Web Audio API music theory reference
     </footer>
   </div>
