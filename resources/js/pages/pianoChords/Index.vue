@@ -398,7 +398,10 @@
             }}
           </h2>
           <div class="flex flex-wrap gap-2">
-            <select v-model="accidentalMode" class="rounded-lg border border-[#47736b] bg-[#24504a] px-2 py-2 text-xs text-[#f7f3e9]">
+            <select
+              v-model="accidentalMode"
+              class="rounded-lg border border-[#47736b] bg-[#24504a] px-2 py-2 text-xs text-[#f7f3e9]"
+            >
               <option value="sharps">♯ Sharps</option>
               <option value="flats">♭ Flats</option>
               <option value="custom">Custom</option></select
@@ -456,7 +459,10 @@
         <div class="rounded-2xl border border-[#dcd8ce] bg-[#fffdf8] p-6 lg:col-span-2">
           <div class="mb-4 flex items-center justify-between">
             <h3 class="flex items-center gap-2 text-lg font-bold"><Search class="h-5 w-5 text-[#b56e4b]" />Chord matches</h3>
-            <button class="flex items-center gap-2 rounded-lg bg-[#e7ded2] px-3 py-2 text-xs text-[#173d3a]" @click="manualNotes = []">
+            <button
+              class="flex items-center gap-2 rounded-lg bg-[#e7ded2] px-3 py-2 text-xs text-[#173d3a]"
+              @click="manualNotes = []"
+            >
               <RotateCcw class="h-4 w-4" />Clear
             </button>
           </div>

@@ -45,7 +45,7 @@
               ? isRoot(midi)
                 ? 'fill-[#39766b] stroke-[#a9c2ba]'
                 : 'fill-[#b56e4b] stroke-[#f1c09f]'
-                : 'fill-[#fffdf8] stroke-[#dcd8ce]'
+              : 'fill-[#fffdf8] stroke-[#dcd8ce]'
           "
         />
         <text

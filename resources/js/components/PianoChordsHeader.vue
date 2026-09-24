@@ -37,7 +37,11 @@
           v-for="item in tabs"
           :key="item.id"
           class="flex items-center gap-2 whitespace-nowrap rounded-lg px-3 py-2 text-sm"
-          :class="activeTab === item.id ? 'bg-[#e7b08c] font-semibold text-[#173d3a]' : 'text-[#39766b] hover:bg-[#c6dcd4] hover:text-[#173d3a]'"
+          :class="
+            activeTab === item.id
+              ? 'bg-[#e7b08c] font-semibold text-[#173d3a]'
+              : 'text-[#39766b] hover:bg-[#c6dcd4] hover:text-[#173d3a]'
+          "
           @click="emit('selectTab', item.id)"
         >
           <component :is="item.icon" class="h-4 w-4" />{{ item.label }}

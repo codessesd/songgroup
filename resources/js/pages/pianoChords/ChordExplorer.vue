@@ -1,27 +1,27 @@
 <script setup lang="ts">
-import { Play } from "@lucide/vue";
-import type { ChordDefinition } from "./types";
+  import { Play } from "@lucide/vue";
+  import type { ChordDefinition } from "./types";
 
-const props = defineProps<{
-  rootNote: number;
-  chordType: string;
-  inversion: number;
-  slashBass: number | null;
-  noteName: (pitch: number) => string;
-  currentChord: ChordDefinition;
-  chordDefinitions: ChordDefinition[];
-  calculatedNotes: number[];
-}>();
+  const props = defineProps<{
+    rootNote: number;
+    chordType: string;
+    inversion: number;
+    slashBass: number | null;
+    noteName: (pitch: number) => string;
+    currentChord: ChordDefinition;
+    chordDefinitions: ChordDefinition[];
+    calculatedNotes: number[];
+  }>();
 
-const emit = defineEmits<{
-  rootChange: [root: number];
-  chordTypeChange: [chordType: string];
-  inversionChange: [inversion: number];
-  slashBassChange: [slashBass: number | null];
-  play: [];
-}>();
+  const emit = defineEmits<{
+    rootChange: [root: number];
+    chordTypeChange: [chordType: string];
+    inversionChange: [inversion: number];
+    slashBassChange: [slashBass: number | null];
+    play: [];
+  }>();
 
-const categories = ["Triads", "7ths", "6ths", "Suspended", "Extended"];
+  const categories = ["Triads", "7ths", "6ths", "Suspended", "Extended"];
 </script>
 
 <template>
@@ -101,21 +101,35 @@ const categories = ["Triads", "7ths", "6ths", "Suspended", "Extended"];
         <div>
           <span class="text-xs uppercase tracking-widest text-[#e7b08c]">Active chord</span>
           <h3 class="mt-1 text-3xl font-extrabold">
-            {{ noteName(rootNote) }}{{ currentChord.abbr }}<span v-if="slashBass !== null" class="text-[#a9c2ba]">/{{ noteName(slashBass) }}</span>
+            {{ noteName(rootNote) }}{{ currentChord.abbr
+            }}<span v-if="slashBass !== null" class="text-[#a9c2ba]">/{{ noteName(slashBass) }}</span>
           </h3>
           <p class="text-sm text-[#a9c2ba]">{{ currentChord.name }}</p>
         </div>
-        <button class="rounded-xl bg-[#e7b08c] p-3 text-[#173d3a]" title="Play chord" @click="emit('play')"><Play class="h-5 w-5 fill-current" /></button>
+        <button class="rounded-xl bg-[#e7b08c] p-3 text-[#173d3a]" title="Play chord" @click="emit('play')">
+          <Play class="h-5 w-5 fill-current" />
+        </button>
       </div>
       <div class="my-6 flex flex-wrap gap-2">
-        <div v-for="(midi, index) in calculatedNotes" :key="`${midi}-${index}`" class="rounded-xl border border-[#47736b] bg-[#24504a] px-3 py-2 text-center">
-          <strong>{{ noteName(midi) }}</strong><small class="block text-[#e7b08c]">{{ currentChord.intervals[index] || "Bass" }}</small>
+        <div
+          v-for="(midi, index) in calculatedNotes"
+          :key="`${midi}-${index}`"
+          class="rounded-xl border border-[#47736b] bg-[#24504a] px-3 py-2 text-center"
+        >
+          <strong>{{ noteName(midi) }}</strong
+          ><small class="block text-[#e7b08c]">{{ currentChord.intervals[index] || "Bass" }}</small>
         </div>
       </div>
-      <div class="rounded-xl border border-[#47736b] bg-[#123330] p-3 text-sm text-[#e7b08c]">{{ currentChord.intervals.join(" - ") }}</div>
+      <div class="rounded-xl border border-[#47736b] bg-[#123330] p-3 text-sm text-[#e7b08c]">
+        {{ currentChord.intervals.join(" - ") }}
+      </div>
       <div class="mt-3 grid grid-cols-2 gap-2 text-xs">
-        <div class="rounded-lg bg-[#24504a] p-2">Right hand<br /><strong>{{ currentChord.fingerings.RH }}</strong></div>
-        <div class="rounded-lg bg-[#24504a] p-2">Left hand<br /><strong>{{ currentChord.fingerings.LH }}</strong></div>
+        <div class="rounded-lg bg-[#24504a] p-2">
+          Right hand<br /><strong>{{ currentChord.fingerings.RH }}</strong>
+        </div>
+        <div class="rounded-lg bg-[#24504a] p-2">
+          Left hand<br /><strong>{{ currentChord.fingerings.LH }}</strong>
+        </div>
       </div>
     </div>
   </section>
